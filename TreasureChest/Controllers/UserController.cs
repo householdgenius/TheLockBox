@@ -24,7 +24,7 @@ namespace TreasureChest.Controllers
         public IActionResult GetUser()
         {
             var claim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            return Ok(_userRepository.GetByFirebaseUserId(claim));
+            return Ok(_userRepository.GetByFireBaseUserId(claim));
         }
         [HttpGet("GetAllProfiles")]
         public IActionResult GetAllProfiles()
@@ -33,10 +33,10 @@ namespace TreasureChest.Controllers
             return Ok(profiles);
         }
 
-        [HttpGet("DoesUserExist/{firebaseUserId}")]
-        public IActionResult DoesUserExist(string firebaseUserId)
+        [HttpGet("DoesUserExist/{FireBaseUserId}")]
+        public IActionResult DoesUserExist(string fireBaseUserId)
         {
-            var user = _userRepository.GetByFirebaseUserId(firebaseUserId);
+            var user = _userRepository.GetByFireBaseUserId(fireBaseUserId);
             if (user == null)
             {
                 return NotFound();

@@ -19,9 +19,9 @@ namespace TreasureChest.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT u.Id, u.FirebaseUserId, u.Name, u.Email, u.isAdmin
-                          FROM User u
-                         WHERE FireBaseUserId = @FireBaseuserId";
+                        SELECT Id, FireBaseUserId, Name, Email, IsAdmin
+                          FROM [User]
+                         WHERE FireBaseUserId = @FireBaseUserId";
 
                     DbUtils.AddParameter(cmd, "@FireBaseUserId", fireBaseUserId);
 
@@ -33,8 +33,8 @@ namespace TreasureChest.Repositories
                         user = new User()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            FireBaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
-                            Name = DbUtils.GetString(reader, "FirstName"),
+                            FireBaseUserId = DbUtils.GetString(reader, "FireBaseUserId"),
+                            Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
                             IsAdmin = DbUtils.GetBool(reader, "IsAdmin"),
                         };

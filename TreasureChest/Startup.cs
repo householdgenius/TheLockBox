@@ -31,6 +31,7 @@ namespace TreasureChest
         {
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IPrivilegeRepository, PrivilegeRepository>();
+            services.AddTransient<IChoreRepository, ChoreRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

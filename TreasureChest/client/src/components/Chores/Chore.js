@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody } from "reactstrap";
+import { Card, CardBody, Button } from "reactstrap";
 import { useHistory } from "react-router"
 
 const Chore = ({chore}) => {
@@ -9,8 +9,7 @@ const Chore = ({chore}) => {
       <CardBody>
         <p>
           <strong>{chore.name}</strong>
-          <button className="button"type="button" onClick={() => {history.push( `/Chore/delete/${chore.id}`)}}>Delete</button>
-          <button className="button" type="button" onClick={() => history.push(`/Chore/${chore.id}/edit`)}>Edit</button>
+          <Button className="button"type="button" onClick={() => {history.push( `/Chore/details/${chore.id}`)}}>Details</Button>
         </p>
       </CardBody>
     </Card>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,36 @@ namespace TreasureChest.Repositories
                 }
             }
 
+        }
+        public Privilege GetPrivilegeById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id,
+                                               Description
+                                          FROM Privilege
+                                         WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    Privilege privilege= null;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (privilege == null)
+                        {
+                            privilege = new Privilege()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Description = reader.GetString(reader.GetOrdinal("Description"))
+                            };
+                        }
+                    }
+                    reader.Close();
+                    return privilege;
+                }
+            }
         }
     }
 }

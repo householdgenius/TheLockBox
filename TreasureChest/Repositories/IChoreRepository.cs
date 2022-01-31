@@ -6,5 +6,6 @@ namespace TreasureChest.Repositories
     public interface IChoreRepository
     {
         List<Chore> GetAllChores();
+        Chore GetChoreById(int id);
     }
 }

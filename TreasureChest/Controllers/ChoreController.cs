@@ -29,9 +29,14 @@ namespace TreasureChest.Controllers
 
         // GET api/<ChoreController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var chore = _choreRepository.GetChoreById(id);
+            if (chore == null)
+            {
+                return NotFound();
+            }
+            return Ok(chore);
         }
 
         // POST api/<ChoreController>

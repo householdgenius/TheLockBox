@@ -29,9 +29,14 @@ namespace TreasureChest.Controllers
 
         // GET api/<PrivilegeController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var privilege = _privilegeRepository.GetPrivilegeById(id);
+            if (privilege == null)
+            {
+                return NotFound();
+            }
+            return Ok(privilege);
         }
 
         // POST api/<PrivilegeController>

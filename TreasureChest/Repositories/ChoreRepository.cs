@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,37 @@ namespace TreasureChest.Repositories
                 }
             }
 
+        }
+        public Chore GetChoreById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, [Name], PrivilegeId, DateCompleted
+                                          FROM Chore
+                                         WHERE Id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    Chore chore = null;
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (chore == null)
+                        {
+                            chore = new Chore()
+                            {
+                                Id = DbUtils.GetInt(reader,"Id"),
+                                Name = DbUtils.GetString(reader,"Name"),
+                                PrivilegeId = DbUtils.GetInt(reader,"PrivilegeId"),
+                                DateCompleted = DbUtils.GetDateTime(reader, "DateCompleted"),
+                            };
+                        }
+                    }
+                    reader.Close();
+                    return chore;
+                }
+            }
         }
     }
 }

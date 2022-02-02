@@ -68,5 +68,49 @@ namespace TreasureChest.Repositories
                 }
             }
         }
+        public void CreatePrivilege(Privilege privilege)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Privilege (Description)
+                                                     VALUES (@Description)";
+                    cmd.Parameters.AddWithValue("@Description", privilege.Description);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void Update(Privilege privilege)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Privilege
+                                           SET Description = @description
+                                         WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@description", privilege.Description);
+                    cmd.Parameters.AddWithValue("@id", privilege.Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void Delete(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Privilege WHERE id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }

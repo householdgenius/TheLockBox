@@ -72,5 +72,65 @@ namespace TreasureChest.Repositories
                 }
             }
         }
+        public void CreateChore(Chore chore)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Chore (Name, PrivilegeId, DateCompleted)
+                                                     VALUES (@Name, @PrivilegeId, @DateCompleted)";
+                    cmd.Parameters.AddWithValue("@Name", chore.Name);
+                    cmd.Parameters.AddWithValue("@PrivilegeId", chore.PrivilegeId);
+                    cmd.Parameters.AddWithValue("@DateCompleted", chore.DateCompleted);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void Update(Chore chore)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Chore
+                                        SET 
+                                            Name = @name,
+                                            PrivilegeId = @privilegeId,
+                                            DateCompleted = @dateCompleted,
+                                        WHERE Id = @id
+                                        ";
+
+                    cmd.Parameters.AddWithValue("@name", chore.Name);
+                    cmd.Parameters.AddWithValue("@privilegeId", chore.PrivilegeId);
+                    cmd.Parameters.AddWithValue("@datecompleted", chore.DateCompleted);
+                    cmd.Parameters.AddWithValue("@id", chore.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        public void Delete(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        DELETE FROM Chore
+                                        
+                                        WHERE Id = @id
+                                       ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+
+                }
+            }
+        }
     }
 }

@@ -7,5 +7,9 @@ namespace TreasureChest.Repositories
     {
         List<Privilege> GetAllPrivileges();
         Privilege GetPrivilegeById(int id);
+        void CreatePrivilege(Privilege privilege);
+        void Update(Privilege privilege);
+        public void Delete(int id);
+
     }
 }

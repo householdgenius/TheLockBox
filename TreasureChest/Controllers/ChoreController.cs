@@ -41,20 +41,31 @@ namespace TreasureChest.Controllers
 
         // POST api/<ChoreController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult AddChore(Chore chore)
         {
+            _choreRepository.CreateChore(chore);
+            return CreatedAtAction("Get", new { id = chore.Id }, chore);
         }
 
         // PUT api/<ChoreController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, Chore chore)
         {
+            if (id != chore.Id)
+            {
+                return BadRequest();
+            }
+
+            _choreRepository.Update(chore);
+            return NoContent();
         }
 
         // DELETE api/<ChoreController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _choreRepository.Delete(id);
+            return NoContent();
         }
     }
 }

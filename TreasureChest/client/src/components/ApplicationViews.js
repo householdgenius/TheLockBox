@@ -6,6 +6,12 @@ import PrivilegeList from "./Privileges/PrivilegeList";
 import ChoreList from "./Chores/ChoreList";
 import PrivilegeDetails from "./Privileges/PrivilegeDetails";
 import ChoreDetails from "./Chores/ChoreDetails"
+import AddChore from "./Chores/AddChore";
+import AddPrivilege from "./Privileges/AddPrivilege";
+import { EditPrivilege } from "./Privileges/EditPrivilege";
+import { EditChore } from "./Chores/EditChore";
+import DeleteChore from "./Chores/DeleteChore";
+import DeletePrivilege from "./Privileges/DeletePrivilege";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -20,12 +26,30 @@ export default function ApplicationViews({ isLoggedIn }) {
         <Route path="/Privilege/details/:id">
           <PrivilegeDetails />
         </Route >
+        <Route path="/Privilege/create">
+          <AddPrivilege />
+        </Route >
+        <Route path="/Privilege/:privilegeId(\d+)/edit">
+          <EditPrivilege />
+        </Route>
+        <Route path="/Privilege/delete/:privilegeId(\d+)">
+          <DeletePrivilege />
+        </Route>
         <Route path="/Chore" exact>
           <ChoreList />
         </Route>
         <Route path="/Chore/details/:id">
           <ChoreDetails />
         </Route >
+        <Route path="/Chore/create">
+          <AddChore />
+        </Route >
+        <Route path="/Chore/:choreId(\d+)/edit">
+          <EditChore />
+        </Route>
+        <Route path="/Chore/delete/:choreId(\d+)">
+          <DeleteChore />
+        </Route>
         <Route path="/login">
           <Login />
         </Route>

@@ -41,20 +41,31 @@ namespace TreasureChest.Controllers
 
         // POST api/<PrivilegeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult AddPrivilege(Privilege privilege)
         {
+            _privilegeRepository.CreatePrivilege(privilege);
+            return CreatedAtAction("Get", new { id = privilege.Id }, privilege);
         }
 
         // PUT api/<PrivilegeController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, Privilege privilege)
         {
+            if (id != privilege.Id)
+            {
+                return BadRequest();
+            }
+
+            _privilegeRepository.Update(privilege);
+            return NoContent();
         }
 
         // DELETE api/<PrivilegeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _privilegeRepository.Delete(id);
+            return NoContent();
         }
     }
 }

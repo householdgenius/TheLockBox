@@ -7,5 +7,8 @@ namespace TreasureChest.Repositories
     {
         List<Chore> GetAllChores();
         Chore GetChoreById(int id);
+        void CreateChore(Chore chore);
+        void Update(Chore chore);
+        void Delete(int id);
     }
 }

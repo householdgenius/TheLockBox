@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Card } from 'reactstrap';
 import { useHistory, Link } from "react-router-dom";
 import { login } from "../modules/authManager";
 
@@ -17,6 +17,8 @@ export default function Login() {
   };
 
   return (
+    <Card  body color="dark"
+    inverse >
     <Form onSubmit={loginSubmit}>
       <fieldset>
         <FormGroup>
@@ -28,12 +30,13 @@ export default function Login() {
           <Input id="password" type="password" onChange={e => setPassword(e.target.value)} />
         </FormGroup>
         <FormGroup>
-          <Button>Login</Button>
+          <Button className="bn btn-warning">Login</Button>
         </FormGroup>
         <em>
           Not registered? <Link to="register">Register</Link>
         </em>
       </fieldset>
     </Form>
+    </Card>
   );
 }

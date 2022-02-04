@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getPrivilegeById, update } from "../../modules/PrivilegeManager";
+import { Card } from "reactstrap";
 
  
 export const EditPrivilege = () => {
@@ -40,18 +41,21 @@ export const EditPrivilege = () => {
 
     return (
         <>
+        <Card body color="dark"
+        inverse>
             <form>
                 <fieldset >
                     <h2 className="privilegeForm__title">Edit Privilege</h2>
                     <div className="formgroup">
                         <label htmlFor="name"> Privilege </label>
                         <input type="text" required className="form-control" onChange={handleFieldChange} id="name" value={privilege.description} placeholder={"Enter a new Value"} />
-                        <button type="button" disabled={isLoading} onClick={updateExistingPrivilege} className="button"> Submit </button>
-                        <button type="button" disabled={isLoading} onClick={cancelAndGoBack} className="button"> Cancel </button>
+                        <button type="button" disabled={isLoading} onClick={updateExistingPrivilege} className="btn btn-warning"> Submit </button>
+                        <button type="button" disabled={isLoading} onClick={cancelAndGoBack} className="btn btn-warning"> Cancel </button>
                     </div>
 
                 </fieldset>
             </form>
+            </Card>
         </>
     );
 }

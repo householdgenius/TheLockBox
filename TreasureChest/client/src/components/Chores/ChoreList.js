@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Chore from './Chore';
 import { useHistory } from "react-router";
 import { getAllChores } from "../../modules/ChoreManager";
+import { ListGroupItem } from "reactstrap";
+
 
 const ChoreList = () => {
   const [ chores, setChores] = useState([]);
@@ -15,10 +17,9 @@ const ChoreList = () => {
   }, []);
 
   return (
-    
-    <div className="container">
+    <div className="container-sm">
       <button type="button"
-				className="button"
+				className="btn btn-warning"
 				onClick={() => {history.push("/Chore/create")}}>
 				Add Chore
 			</button>

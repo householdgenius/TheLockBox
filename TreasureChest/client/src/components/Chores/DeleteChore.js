@@ -13,13 +13,14 @@ const DeleteChore = ({ }) => {
     };
 
     return (
-        <Card >
+        <Card ody color="dark"
+        inverse >
             <CardBody>
                 <p>
                     <strong>Are you sure you want to delete this Chore?</strong>
-                    <button className="button" type="button" onClick={() => { history.push("/Chore") }}> No </button>
-                    <button className="button" type="button" onClick={handleDeleteChore}> Yes </button>
                 </p>
+                <button className="btn btn-warning" type="button" onClick={() => { history.push("/Chore") }}> No </button>
+                    <button className="btn btn-warning" type="button" onClick={handleDeleteChore}> Yes </button>
             </CardBody>
         </Card>
     );

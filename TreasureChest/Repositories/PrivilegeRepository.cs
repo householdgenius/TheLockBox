@@ -45,10 +45,10 @@ namespace TreasureChest.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Id,
-                                               Description
-                                          FROM Privilege
-                                         WHERE id = @id";
+                    cmd.CommandText = @"SELECT p.Id, p.[Description], c.[Name]
+                                        FROM Privilege p
+                                        LEFT JOIN Chore c ON p.Id = c.privilegeId
+                                         WHERE p.Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
                     Privilege privilege= null;
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -59,7 +59,12 @@ namespace TreasureChest.Repositories
                             privilege = new Privilege()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                                Description = reader.GetString(reader.GetOrdinal("Description"))
+                                Description = reader.GetString(reader.GetOrdinal("Description")),
+                                Chore = new Chore()
+                                {
+                                    Name = reader.GetString(reader.GetOrdinal("Name"))
+                                }
+                                    
                             };
                         }
                     }

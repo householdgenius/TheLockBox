@@ -1,6 +1,25 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 const _apiUrl = "/api/User";
+
+export const getAllUsers = () => {
+  return getToken().then((token) => {
+    return fetch(`${_apiUrl}/getAllProfiles`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    ).then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("An unknown error occurred while trying to get users.");
+      }
+    });
+  });
+};
 const _doesUserExist = (firebaseUserId) => {
   return getToken().then((token) =>
     fetch(`${_apiUrl}/DoesUserExist/${firebaseUserId}`, {

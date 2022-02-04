@@ -18,12 +18,12 @@ export default function Header({ isLoggedIn }) {
   const toggle = () => setIsOpen(!isOpen);
   useEffect(() => {
     if (isLoggedIn) {
-      _getUserData().then(res => setIsAdmin(res.user.name))
+      _getUserData().then(res => setIsAdmin(res.isAdmin))
     }
   }, [isLoggedIn])
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <Navbar color="dark" dark expand="md" light>
         <NavbarBrand tag={RRNavLink} to="/">Treasure Chest</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

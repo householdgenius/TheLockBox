@@ -13,14 +13,15 @@ const DeletePrivilege = ({ }) => {
     };
 
     return (
-        <Card >
+        <Card body color="dark"
+        inverse>
             <CardBody>
                 <p>
                     <strong>Are you sure you want to delete this Privilege?</strong>
-                    <button className="button" type="button" onClick={() => { history.push("/Privilege") }}> No </button>
-                    <button className="button" type="button" onClick={handleDeletePrivilege}> Yes </button>
                 </p>
-            </CardBody>
+                <button className="btn btn-warning" type="button" onClick={() => { history.push("/Privilege") }}> No </button>
+                <button className="btn btn-warning" type="button" onClick={handleDeletePrivilege}> Yes </button>
+                </CardBody>
         </Card>
     );
 };

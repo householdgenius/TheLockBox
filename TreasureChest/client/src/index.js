@@ -4,6 +4,7 @@ import App from './App';
 import firebase from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import 'bootstrap';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,

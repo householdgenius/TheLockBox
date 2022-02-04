@@ -5,12 +5,15 @@ import { useHistory } from "react-router"
 const Chore = ({chore}) => {
   const history = useHistory();
   return (
-    <Card >
+    <Card
+    body color="dark"
+    inverse
+    >
       <CardBody>
         <p>
           <strong>{chore.name}</strong>
-          <Button className="button"type="button" onClick={() => {history.push( `/Chore/details/${chore.id}`)}}>Details</Button>
         </p>
+        <Button className="btn btn-warning"type="button" onClick={() => {history.push( `/Chore/details/${chore.id}`)}}>Details</Button>
       </CardBody>
     </Card>
   );

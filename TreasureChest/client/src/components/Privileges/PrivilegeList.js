@@ -9,8 +9,6 @@ const PrivilegeList = () => {
   const getPrivileges = () => {
     getAllPrivileges().then( privileges => setPrivileges( privileges));
   };
-
-
   useEffect(() => {
     getPrivileges();
   }, []);
@@ -19,7 +17,7 @@ const PrivilegeList = () => {
     
     <div className="container">
       <button type="button"
-				className="button"
+				className="btn btn-warning"
 				onClick={() => {history.push("/Privilege/create")}}>
 				Add Privilege
 			</button>

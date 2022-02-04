@@ -73,9 +73,9 @@ namespace TreasureChest.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT u.Id, u.FireBaseUserId, u.Name, 
-                               u.Email, u.IsAdmin,
-                          FROM User u";
+                        SELECT u.Id, u.FireBaseUserId, u.[Name], 
+                               u.Email, u.IsAdmin
+                          FROM [User] u";
                     List<User> list = new List<User>();
                     var reader = cmd.ExecuteReader();
                     while (reader.Read())
@@ -84,7 +84,7 @@ namespace TreasureChest.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
                             FireBaseUserId = DbUtils.GetString(reader, "FireBaseUserId"),
-                            Name = DbUtils.GetString(reader, "FirstName"),
+                            Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
                             IsAdmin = DbUtils.GetBool(reader, "IsAdmin"),
                         };

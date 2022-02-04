@@ -1,16 +1,34 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import {  addChore } from "../../modules/ChoreManager"
+import { addChore } from "../../modules/ChoreManager"
+import { getAllPrivileges } from "../../modules/PrivilegeManager";
+import { getAllUsers } from "../../modules/authManager";
+import { Card } from "reactstrap";
 
 
- const AddChore = () => {
+const AddChore = () => {
+
+    const [privileges, setPrivileges] = useState([]);
+    const [users, setUsers] = useState([]);
     const [chore, setChore] = useState({
         name: "",
         privilegeId: 0,
-        dateCompleted: Date.now(),
+        userId: 0,
+        dateCompleted: new Date(Date.now()).toISOString(),
     });
 
     const history = useHistory();
+
+    useEffect(() => {
+        getAllPrivileges()
+        .then(res => {
+            setPrivileges(res)
+        })
+        getAllUsers()
+            .then(res => {
+                setUsers(res)
+            })
+    }, [])
 
     const handleControlledInputChange = (event) => {
         const newChore = { ...chore }
@@ -23,31 +41,44 @@ import {  addChore } from "../../modules/ChoreManager"
     }
 
     const handleClickSaveChore = (event) => {
-		event.preventDefault()
-            addChore(chore)
-                .then(() => history.push("/Chore"))
+        event.preventDefault()
+        const choreCopy = {...chore }
+        choreCopy.dateCompleted = new Date(chore.dateCompleted).toISOString();
+        addChore(choreCopy)
+            .then(() => history.push("/Chore"))
     }
-     
+    const cancelAndGoBack = () => history.push("/Chore");
+
     return (
-		<form className="form-group">
-			<fieldset>
-			<h2 className="choreForm__title">New Chore</h2>
-				<div className="form-group">
-					<label htmlFor="name">Chore:</label>
-					<input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Chore Name" value={chore.name} />
-				</div>
-                <div className="form-group">
-					<label htmlFor="privilege">Privilege to Earn:</label>
-					<input type="text" id="privilege" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Privilege" value={chore.privilegeId} />
-				</div>
-                <div className="form-group">
-					<label htmlFor="name">Chore:</label>
-					<input type="date" id="date" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="completion date" value={chore.dateCompleted} />
-				</div>
-			<button className="btn btn-primary" onClick={handleClickSaveChore}>Save Chore</button>
-			</fieldset>
-		</form>
-	)
+        <Card body color="dark"
+            inverse>
+            <form className="form-group">
+                <fieldset>
+                    <h2 className="choreForm__title">New Chore</h2>
+                    <div className="form-group">
+                        <label htmlFor="name">Chore:</label>
+                        <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Chore Name" />
+                    </div>
+                    <div className="form-group">
+                        <select type="text" id="userId" onChange={handleControlledInputChange} required autoFocus className="form-control" > <option value="0">Assign to User: </option>
+                            {users.map(u => (<option key={u.id} value={u.id}>
+                                {u.name}
+                            </option>))}</select></div>
+                    <div className="form-group">
+                        <select type="text" id="privilegeId" onChange={handleControlledInputChange} required autoFocus className="form-control" >
+                            <option value="0">Select Privilege</option>
+                            {privileges.map(p => (<option key={p.id} value={p.id}>{p.description}</option>))}
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <input type="date" required className="form-control" onChange={handleControlledInputChange} id="date" placeholder={"Enter a new Value"} />
+                    </div>
+                    <button className="btn btn-warning" onClick={handleClickSaveChore}>Save Chore</button>
+                    <button className="btn btn-warning" onClick={cancelAndGoBack}>Cancel</button>
+                </fieldset>
+            </form>
+        </Card>
+    )
 };
 
 export default AddChore;

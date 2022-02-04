@@ -48,9 +48,12 @@ namespace TreasureChest.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Id, [Name], PrivilegeId, DateCompleted
-                                          FROM Chore
-                                         WHERE Id = @id";
+                    cmd.CommandText = @"SELECT c.Id, c.[Name], c.PrivilegeId, c.DateCompleted, p.[Description], u.[Name] as UserName, uc.UserId, uc.ChoreId
+                                          FROM Chore c 
+                                           LEFT JOIN Privilege p ON p.Id = c.PrivilegeId
+                                           LEFT JOIN UserChore uc ON uc.ChoreId = c.Id
+                                           LEFT JOIN [User] u ON u.Id = uc.UserId
+                                         WHERE c.Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
                     Chore chore = null;
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -60,11 +63,25 @@ namespace TreasureChest.Repositories
                         {
                             chore = new Chore()
                             {
-                                Id = DbUtils.GetInt(reader,"Id"),
-                                Name = DbUtils.GetString(reader,"Name"),
-                                PrivilegeId = DbUtils.GetInt(reader,"PrivilegeId"),
+                                Id = DbUtils.GetInt(reader, "Id"),
+                                Name = DbUtils.GetString(reader, "Name"),
+                                PrivilegeId = DbUtils.GetInt(reader, "PrivilegeId"),
                                 DateCompleted = DbUtils.GetDateTime(reader, "DateCompleted"),
+                                Privilege = new Privilege()
+                                {
+                                    Description = DbUtils.GetString(reader, "Description")
+                                },
+                                Users = new List<User>()
+
                             };
+                        }
+                        if (DbUtils.IsNotDbNull(reader, "UserId"))
+                        {
+                            chore.Users.Add(new User
+                            {
+                                Id = DbUtils.GetInt(reader, "UserId"),
+                                Name = DbUtils.GetString(reader, "UserName")
+                            });
                         }
                     }
                     reader.Close();

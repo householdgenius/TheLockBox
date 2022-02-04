@@ -22,13 +22,15 @@ else{
     return (
         <div className="privilegeDetailsCard">
             <h2>Privilege Details</h2>
-            < Card >
+            < Card body color="dark"
+    inverse >
                 <CardBody>
                     {privilege.description}
                 </CardBody>
                 <CardFooter>
-                    <button className="button" type="button" onClick={() => history.push(`/Privilege/${privilege.id}/edit`)}>Edit</button>
-                    <button className="button"type="button" onClick={() => {history.push( `/Privilege/delete/${privilege.id}`)}}>Delete</button>
+                    <button className="btn btn-warning" type="button" onClick={() => history.push(`/Privilege/${privilege.id}/edit`)}>Edit</button>
+                    <button className="btn btn-warning"type="button" onClick={() => {history.push( `/Privilege`)}}>Cancel</button>
+                    <button className="btn btn-danger"type="button" onClick={() => {history.push( `/Privilege/delete/${privilege.id}`)}}>Delete</button>
                 </CardFooter>
             </Card>
         </div >

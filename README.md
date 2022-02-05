@@ -7,7 +7,7 @@ I created this application to encourage parent to child communication and also p
 ## How It Works
 This application allows the admin to create chores and privileges to be completed and earned by the user. Users, or the child/teen, can complete chores, earn privileges, and see which privileges are active for them.
 ## Creation
-THis project was built using an Asp.Net/C#/SQL Backend with a React.js front end. 
+This project was built using an Asp.Net/C#/SQL Backend with a React.js front end. 
 ## How to Install 
 Clone this repo, and then clone this through Visual Studio and find the project in your terminal. 
 ## Difficulties and Challenges

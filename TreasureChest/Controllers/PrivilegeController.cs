@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TreasureChest.Models;
 using TreasureChest.Repositories;
@@ -15,9 +16,11 @@ namespace TreasureChest.Controllers
     public class PrivilegeController : ControllerBase
     {
         private readonly IPrivilegeRepository _privilegeRepository;
-        public PrivilegeController(IPrivilegeRepository privilegeRepository)
+        private readonly IUserRepository _userRepository;
+        public PrivilegeController(IPrivilegeRepository privilegeRepository, IUserRepository userRepository)
         {
             _privilegeRepository = privilegeRepository;
+            _userRepository = userRepository;
         }
         // GET: api/<PrivilegeController>
         [HttpGet]
@@ -38,6 +41,19 @@ namespace TreasureChest.Controllers
             }
             return Ok(privilege);
         }
+
+        [HttpGet("activePrivileges")]
+        public IActionResult GetActive()
+        {
+            var user = GetCurrentUserProfile();
+            var privilege = _privilegeRepository.GetPrivilegesByUserId(user.Id);
+            if (privilege == null)
+            {
+                return NotFound();
+            }
+            return Ok(privilege);
+        }
+
 
         // POST api/<PrivilegeController>
         [HttpPost]
@@ -66,6 +82,11 @@ namespace TreasureChest.Controllers
         {
             _privilegeRepository.Delete(id);
             return NoContent();
+        }
+        private User GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepository.GetByFireBaseUserId(firebaseUserId);
         }
     }
 }

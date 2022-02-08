@@ -9,6 +9,8 @@ namespace TreasureChest.Models
     {
         public int Id { get; set; }
         public string Description { get; set; }
+        public List <Chore> Chores { get; set; }
         public Chore Chore { get; set; }
+        public User User { get; set; }
     }
 }

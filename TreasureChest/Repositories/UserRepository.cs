@@ -36,7 +36,7 @@ namespace TreasureChest.Repositories
                             FireBaseUserId = DbUtils.GetString(reader, "FireBaseUserId"),
                             Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
-                            IsAdmin = DbUtils.GetBool(reader, "IsAdmin"),
+                            IsAdmin = reader.GetBoolean(reader.GetOrdinal("IsAdmin"))
                         };
                     }
                     reader.Close();
@@ -86,7 +86,7 @@ namespace TreasureChest.Repositories
                             FireBaseUserId = DbUtils.GetString(reader, "FireBaseUserId"),
                             Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
-                            IsAdmin = DbUtils.GetBool(reader, "IsAdmin"),
+                            IsAdmin = reader.GetBoolean(reader.GetOrdinal("IsAdmin"))
                         };
                         list.Add(user);
                     }

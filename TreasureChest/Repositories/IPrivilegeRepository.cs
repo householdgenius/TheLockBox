@@ -10,6 +10,7 @@ namespace TreasureChest.Repositories
         void CreatePrivilege(Privilege privilege);
         void Update(Privilege privilege);
         public void Delete(int id);
+        List<Privilege> GetPrivilegesByUserId(int id);
 
     }
 }

@@ -9,7 +9,7 @@ namespace TreasureChest.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int PrivilegeId { get; set; }
+        public int? PrivilegeId { get; set; } 
         public DateTime DateCompleted { get; set; }
         public Privilege Privilege { get; set; }
         public List <User> Users { get; set; }

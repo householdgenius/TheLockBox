@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { getChoreById, update } from "../../modules/ChoreManager";
+import { getChoreById, update, updateChoreUsers } from "../../modules/ChoreManager";
 import { getAllPrivileges } from "../../modules/PrivilegeManager";
 import { getAllUsers } from "../../modules/authManager";
 import { Card } from "reactstrap";
@@ -50,16 +50,12 @@ export const EditChore = () => {
             id: choreId,
             name: chore.name,
             privilegeId: chore.privilegeId,
-            date: new Date(chore.dateCompleted).toISOString()
+            dateCompleted: new Date(chore.dateCompleted).toISOString()
         }
-        update(editedChore)
-            .then(() => history.push("/Chore")
-            )
+            Promise.all([update(editedChore), updateChoreUsers({choreId, userIds:selectedUsers})])
+            .then(() => history.push("/Chore"))
     }
     
-    const checkIfUserSelected = userId =>{
-       return selectedUsers.includes(userId)
-    }
     const cancelAndGoBack = () => history.push("/Chore");
 
     return (
@@ -72,8 +68,8 @@ export const EditChore = () => {
                         <input type="text" required className="form-control" onChange={handleFieldChange} id="name" value={chore.name} placeholder={"Enter a new Value"} />
                         </div>
                         <div className="formgroup">
-                        <select multiple type="text" id="userId" onChange={handleMultiSelect} required autoFocus className="form-control"> <option value="0">Assign to User: </option>
-                    {users.map(u => (<option key={u.id} value={u.id} defaultValue={checkIfUserSelected(u.id)}>
+                        <select multiple type="text" id="userId" onChange={handleMultiSelect} value={selectedUsers} required autoFocus className="form-control"> <option value="0">Assign to User: </option>
+                    {users.map(u => (<option key={u.id} value={u.id} >
                         {u.name}
                     </option>))}</select></div>
                     <div className="formgroup">
@@ -83,7 +79,7 @@ export const EditChore = () => {
                         {p.description}
                     </option>))}
                 </select></div>
-                <div className="formgroup"><input type="date" required className="form-control" onChange={handleFieldChange} id="date" placeholder={"Enter a new Value"} /></div>
+                <div className="formgroup"><input type="date" required className="form-control" onChange={handleFieldChange} id="dateCompleted" placeholder={"Enter a new Value"} /></div>
                         <button type="button" disabled={isLoading} onClick={updateExistingChore} className="btn btn-warning"> Submit </button>
                         <button type="button" disabled={isLoading} onClick={cancelAndGoBack} className="btn btn-warning"> Cancel </button>
             </form>

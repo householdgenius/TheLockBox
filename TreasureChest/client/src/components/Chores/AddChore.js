@@ -9,6 +9,7 @@ import { Card } from "reactstrap";
 const AddChore = () => {
 
     const [privileges, setPrivileges] = useState([]);
+    const [selectedUsers, setSelectedUsers] = useState([]);
     const [users, setUsers] = useState([]);
     const [chore, setChore] = useState({
         name: "",
@@ -29,6 +30,14 @@ const AddChore = () => {
                 setUsers(res)
             })
     }, [])
+
+    const handleMultiSelect = event => {
+        const selectedUsers = []
+        for(let i = 0; i< event.target.selectedOptions.length; i++){
+            selectedUsers.push(parseInt(event.target.selectedOptions[i].value))
+        }
+        setSelectedUsers(selectedUsers)
+    }
 
     const handleControlledInputChange = (event) => {
         const newChore = { ...chore }
@@ -59,11 +68,11 @@ const AddChore = () => {
                         <label htmlFor="name">Chore:</label>
                         <input type="text" id="name" onChange={handleControlledInputChange} required autoFocus className="form-control" placeholder="Chore Name" />
                     </div>
-                    <div className="form-group">
-                        <select type="text" id="userId" onChange={handleControlledInputChange} required autoFocus className="form-control" > <option value="0">Assign to User: </option>
-                            {users.map(u => (<option key={u.id} value={u.id}>
-                                {u.name}
-                            </option>))}</select></div>
+                    <div className="formgroup">
+                        <select multiple type="text" id="userId" onChange={handleMultiSelect} value={selectedUsers} required autoFocus className="form-control"> <option value="0">Assign to User: </option>
+                    {users.map(u => (<option key={u.id} value={u.id} >
+                        {u.name}
+                    </option>))}</select></div>
                     <div className="form-group">
                         <select type="text" id="privilegeId" onChange={handleControlledInputChange} required autoFocus className="form-control" >
                             <option value="0">Select Privilege</option>

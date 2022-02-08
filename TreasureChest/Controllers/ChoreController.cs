@@ -26,7 +26,12 @@ namespace TreasureChest.Controllers
             List<Chore> chores = _choreRepository.GetAllChores();
             return Ok(chores);
         }
-
+        [HttpPost("updateChoreUsers")]
+        public IActionResult UpdateChoreUsers(UserChore userChore)
+        {
+            _choreRepository.UpdateChoreUsers(userChore);
+            return NoContent();
+        }
         // GET api/<ChoreController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)

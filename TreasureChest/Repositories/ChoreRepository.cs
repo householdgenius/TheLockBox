@@ -31,7 +31,7 @@ namespace TreasureChest.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
                             Name = DbUtils.GetString(reader, "Name"),
-                            PrivilegeId = DbUtils.GetInt(reader, "PrivilegeId"),
+                            PrivilegeId = DbUtils.GetNullableInt(reader, "PrivilegeId"),
                             DateCompleted = DbUtils.GetDateTime(reader, "DateCompleted"),
                         });
                     }
@@ -116,7 +116,7 @@ namespace TreasureChest.Repositories
                                         SET 
                                             Name = @name,
                                             PrivilegeId = @privilegeId,
-                                            DateCompleted = @dateCompleted,
+                                            DateCompleted = @dateCompleted
                                         WHERE Id = @id
                                         ";
 
@@ -146,6 +146,34 @@ namespace TreasureChest.Repositories
 
                     cmd.ExecuteNonQuery();
 
+                }
+            }
+        }
+
+        public void UpdateChoreUsers(UserChore userChore)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM UserChore 
+                                        WHERE ChoreId = @choreId;";
+                    cmd.Parameters.AddWithValue("@choreId", userChore.ChoreId);
+                    if (userChore.UserIds != null && userChore.UserIds.Count > 0)
+                    {
+                        cmd.CommandText += @"INSERT INTO UserChore (ChoreId, UserId)
+                                        VALUES";
+                        var valuesList = new List<string>();
+                        foreach(var id in userChore.UserIds )
+                        {
+                            valuesList.Add($"(@choreId, @user{id})");
+                            cmd.Parameters.AddWithValue($"@user{id}", id);
+                        }
+                        cmd.CommandText += String.Join(",", valuesList);
+                    }
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

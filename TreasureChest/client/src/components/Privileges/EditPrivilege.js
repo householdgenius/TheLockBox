@@ -48,7 +48,7 @@ export const EditPrivilege = () => {
                     <h2 className="privilegeForm__title">Edit Privilege</h2>
                     <div className="formgroup">
                         <label htmlFor="name"> Privilege </label>
-                        <input type="text" required className="form-control" onChange={handleFieldChange} id="name" value={privilege.description} placeholder={"Enter a new Value"} />
+                        <input type="text" required className="form-control" onChange={handleFieldChange} id="description"  placeholder={"Enter a new Value"} />
                         <button type="button" disabled={isLoading} onClick={updateExistingPrivilege} className="btn btn-warning"> Submit </button>
                         <button type="button" disabled={isLoading} onClick={cancelAndGoBack} className="btn btn-warning"> Cancel </button>
                     </div>

@@ -88,3 +88,23 @@ export const deleteChore = (chore) => {
     });
   });
 };
+
+export const updateChoreUsers = (userChore) => {
+  return getToken().then((token) => {
+    return fetch(`${_apiUrl}/updateChoreUsers`, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userChore)
+    }).then((res) => {
+        if (res.ok) {
+            return res
+        } else {
+            throw new Error("An unknown error occurred while trying to update Chore users.");
+        }
+    });
+});
+
+}

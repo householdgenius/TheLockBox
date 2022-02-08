@@ -10,5 +10,6 @@ namespace TreasureChest.Repositories
         void CreateChore(Chore chore);
         void Update(Chore chore);
         void Delete(int id);
+        void UpdateChoreUsers(UserChore userChore);
     }
 }

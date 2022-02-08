@@ -54,5 +54,10 @@ namespace TreasureChest.Controllers
                 new { firebaseUserId = user.FireBaseUserId },
                 user);
         }
+        private User GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepository.GetByFireBaseUserId(firebaseUserId);
+        }
     }
 }

@@ -7,9 +7,8 @@ namespace TreasureChest.Models
 {
     public class UserChore
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
+   
+        public List <int> UserIds { get; set; }
         public int ChoreId { get; set; }
-        public User User { get; set; }
     }
 }

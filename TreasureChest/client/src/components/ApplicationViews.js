@@ -12,6 +12,7 @@ import { EditPrivilege } from "./Privileges/EditPrivilege";
 import { EditChore } from "./Chores/EditChore";
 import DeleteChore from "./Chores/DeleteChore";
 import DeletePrivilege from "./Privileges/DeletePrivilege";
+import ActivePrivilegeList from "./Privileges/ActivePrivilegeList";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -19,9 +20,13 @@ export default function ApplicationViews({ isLoggedIn }) {
     <main>
       <Switch>
       <Route path="/" exact>
+      {isLoggedIn ? <PrivilegeList />: <Redirect to="/login" />}
         </Route>
         <Route path="/Privilege" exact>
-          <PrivilegeList />
+        {isLoggedIn ? <PrivilegeList />: <Redirect to="/login" />}
+        </Route>
+        <Route path="/activePrivileges">
+        {isLoggedIn ? <ActivePrivilegeList />: <Redirect to="/login" />}
         </Route>
         <Route path="/Privilege/details/:id">
           <PrivilegeDetails />
@@ -36,7 +41,7 @@ export default function ApplicationViews({ isLoggedIn }) {
           <DeletePrivilege />
         </Route>
         <Route path="/Chore" exact>
-          <ChoreList />
+        {isLoggedIn ? <ChoreList />: <Redirect to="/login" />}
         </Route>
         <Route path="/Chore/details/:id">
           <ChoreDetails />

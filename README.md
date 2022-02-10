@@ -9,6 +9,6 @@ This application allows the admin to create chores and privileges to be complete
 ## Creation
 This project was built using an Asp.Net/C#/SQL Backend with a React.js front end. 
 ## How to Install 
-Clone this repo, and then clone this through Visual Studio and find the project in your terminal. 
+Clone this repo, and then clone this through Visual Studio and find the project in your terminal. Enter the create script and then the seed script from the SQL file of this repo to get the database information. 
 ## Difficulties and Challenges
 Getting the active privileges to appear was a big challenge as well as fixing the ability to add an edit a chore because of the multi select for user assignment. 
